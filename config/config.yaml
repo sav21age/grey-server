@@ -1,0 +1,11 @@
+server:
+    max_header_bytes: 1 # in mb
+    read_timeout: 10s
+    write_timeout: 10s
+
+postgres:
+    db_name: "grey"
+    ssl_mode: "disable"
+
+log:
+    level: debug

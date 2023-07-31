@@ -1,0 +1,1 @@
+ALTER TABLE grey.order DROP COLUMN date;

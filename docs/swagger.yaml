@@ -1,0 +1,212 @@
+basePath: /
+definitions:
+  domain.CartInput:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - product_id
+    - quantity
+    type: object
+  domain.ProductInput:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        minimum: 1
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+    required:
+    - name
+    - price
+    - quantity
+    type: object
+  domain.ProductPriceInput:
+    properties:
+      price:
+        minimum: 1
+        type: integer
+    required:
+    - price
+    type: object
+  domain.UserSignUpInput:
+    properties:
+      age:
+        minimum: 18
+        type: integer
+      firstname:
+        type: string
+      is_married:
+        type: boolean
+      lastname:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - age
+    - firstname
+    - is_married
+    - lastname
+    - password
+    - username
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  title: Grey project API
+  version: dev
+paths:
+  /api/auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: Sign up
+      parameters:
+      - description: UserSignUpInput
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UserSignUpInput'
+      produces:
+      - application/json
+      responses: {}
+      summary: Sign up
+  /api/cart/:
+    get:
+      consumes:
+      - application/json
+      description: Show list of items for user with hard coded userId (handler.go
+        -> const)
+      produces:
+      - application/json
+      responses: {}
+      summary: Show cart for user
+  /api/cart/add/:
+    post:
+      consumes:
+      - application/json
+      description: Add product to cart for user with hard coded userId (handler.go
+        -> const)
+      parameters:
+      - description: CartInput
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CartInput'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add product to cart for user
+  /api/cart/checkout:
+    get:
+      consumes:
+      - application/json
+      description: Checkout order for user with hard coded userId (handler.go -> const)
+      produces:
+      - application/json
+      responses: {}
+      summary: Checkout order for user
+  /api/order/:
+    get:
+      consumes:
+      - application/json
+      description: Show list of orders for user with hard coded userId (handler.go
+        -> const)
+      produces:
+      - application/json
+      responses: {}
+      summary: Show orders for user
+  /api/order/{order_id}:
+    get:
+      consumes:
+      - application/json
+      description: Show order details for user with hard coded userId(handler.go ->
+        const)
+      parameters:
+      - description: int
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Show order detail for user
+  /api/product/:
+    get:
+      consumes:
+      - application/json
+      description: Show list of products
+      produces:
+      - application/json
+      responses: {}
+      summary: Show list of products
+  /api/product/{product_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get product
+      parameters:
+      - description: int
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get product
+  /api/product/{product_id}/update-price:
+    post:
+      consumes:
+      - application/json
+      description: Update product price
+      parameters:
+      - description: ProductPriceInput
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ProductPriceInput'
+      - description: int
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Update product price
+  /api/product/create:
+    post:
+      consumes:
+      - application/json
+      description: Create product
+      parameters:
+      - description: ProductInput
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ProductInput'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create product
+swagger: "2.0"
