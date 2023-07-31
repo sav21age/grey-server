@@ -1,0 +1,30 @@
+version: "3.4"
+
+services:
+  server:
+    container_name: grey-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    volumes:
+      - ./config/:/root/config/
+      - ./:/github.com/${USER}/grey-server/
+
+
+  postgres:
+    container_name: postgres
+    image: postgres:11.19-alpine
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+volumes:
+  pgdata:
